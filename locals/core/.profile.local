@@ -1,0 +1,3 @@
+alias tr-add="transmission-remote -a"
+alias tr-list="transmission-remote --list"
+tr-rm () {   transmission-remote -t ${1} --remove-and-delete; }

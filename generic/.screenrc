@@ -1,0 +1,31 @@
+termcapinfo xterm ti@:te@
+defscrollback 80000
+shell -$SHELL
+
+##  unbind xoff
+bind s
+bind ^s
+
+##  Copy mode overrides
+bindkey "^s" copy
+
+##  go into copy mode with a full page up (^b) not just one line,
+##  once in copy mode, then only move one line (k)
+bindkey "^[Oa" eval "copy" "stuff ^b"        ##  MouseUp
+bindkey "^[Ob" eval "copy" "stuff ^f"        ##  MouseDn
+bindkey "^[[1;2a" eval "copy" "stuff ^b"    ##  Shift+MouseUp
+bindkey "^[[1;2b" eval "copy" "stuff ^f"    ##  Shift+MouseDn
+bindkey "^[[5;2~" eval "copy" "stuff ^b"    ##  Shift+PgUp
+bindkey "^[[6;2~" eval "copy" "stuff ^f"    ##  Shift+PgDn
+
+bindkey -m "^[Oa" stuff k                   ##  MouseUp
+bindkey -m "^[Ob" stuff j                   ##  MouseDn
+bindkey -m "^[[1;2a" stuff ^b               ##  Shift+MouseUp
+bindkey -m "^[[1;2b" stuff ^f               ##  Shift+MouseDn
+bindkey -m "^[[5;2~" stuff ^b               ##  Shift+PgUp
+bindkey -m "^[[6;2~" stuff ^f               ##  Shift+PgDn
+
+bindkey -m "^[" stuff q
+
+##  Don't delay things
+msgminwait 0

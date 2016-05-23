@@ -1,0 +1,7 @@
+case "$TERM" in
+xterm*)
+    ##  Cygwin mouse support
+    echo -ne "\e[?7787h"
+    ;;
+
+esac
