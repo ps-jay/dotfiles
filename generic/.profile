@@ -13,7 +13,7 @@ shorthostname() {
 
 # From RHEL... handy
 pathmunge () {
-    if ! echo $PATH | /bin/egrep -q "(^|:)$1($|:)" ; then
+    if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
 	if [ "$2" = "after" ] ; then
 	    PATH=$PATH:$1
       	else
@@ -29,9 +29,17 @@ case "$-" in
             export SSH_AUTH_SOCK_ORIG="${SSH_AUTH_SOCK}"
         fi
         source ~/.ssh/source-ssh-agent
-        if [ -d "/proc/${SSH_AGENT_PID}/" ] ; then
-            :
+        if [[ "$(uname)" == "Darwin" ]] ; then
+            if [[ `ps -p 1916 | grep -q ssh-agent` -ne 0 ]] ; then
+                NO_AGENT=true
+            fi
         else
+            if [[ ! -d "/proc/${SSH_AGENT_PID}/" ]] ; then
+                NO_AGENT=true
+            fi
+        fi
+
+        if [[ ! -z "${NO_AGENT}" ]] ; then
             echo 'SSH-Agent is dead...'
             export SSH_AUTH_SOCK="${SSH_AUTH_SOCK_ORIG}"
             unset SSH_AUTH_SOCK_ORIG
@@ -49,6 +57,11 @@ case "$-" in
     alias duh='du -m -x --max-depth=1 | sort -n'
 
     alias wgetx='wget --no-check-certificate'
+
+    if [[ "$(uname)" == "Darwin" ]] ; then
+        alias egrep='/usr/local/bin/gegrep'
+        alias grep='/usr/local/bin/ggrep'
+    fi
 
     socatnc() {
         socat - TCP4:$@
