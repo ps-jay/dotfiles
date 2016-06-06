@@ -1,0 +1,13 @@
+# $1 = proj-plan (eg. EA-QC)
+# $2 = git branch (eg. dev-jayp1-foo)
+function bambranch () {
+    # -n option means go read .netrc for creds...
+    curl -X PUT -n \
+        https://bamboo.cd.auspost.com.au/bamboo/rest/api/latest/plan/${1}/branch/${2}?vcsBranch="${2}"\&enabled=true
+}
+
+function qc-branch () {
+    bambranch EA-QC ${1}
+    bambranch EA-QCA ${1}
+    bambranch EA-QCN ${1}
+}
