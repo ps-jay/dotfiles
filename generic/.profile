@@ -45,6 +45,10 @@ function history_sync () {
 
 case "$-" in
 *i*)
+    if [ -f ~/.dotfiles.version ] ; then
+        cat ~/.dotfiles.version
+    fi
+
     if [ -f ~/.ssh/source-ssh-agent ] ; then
         if [ "${SSH_AUTH_SOCK}" != "" ] ; then
             export SSH_AUTH_SOCK_ORIG="${SSH_AUTH_SOCK}"
