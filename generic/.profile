@@ -1,10 +1,10 @@
 # Hints: http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
 
-settitle() {
+function settitle() {
     echo -ne "\033k$@\033\\"
 }
 
-shorthostname() {
+function shorthostname() {
     ##  Due to differences in RHEL (hostname -s) & Cygwin (no -s option for hostname)
     IN_TEXT=`hostname`
     HOST=(${IN_TEXT//\./ })
@@ -12,7 +12,7 @@ shorthostname() {
 }
 
 # From RHEL... handy
-pathmunge () {
+function pathmunge () {
     if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
 	if [ "$2" = "after" ] ; then
 	    PATH=$PATH:$1
@@ -22,22 +22,33 @@ pathmunge () {
     fi
 }
 
-function awslookup (){
-  if [ "$#" -ne 2 ]; then
-    echo "Not enough arguments, arguments $1 Tag name value, $2 profile name"
-    return 1
-  fi
+function awslookup () {
+    if [ "$#" -ne 2 ]; then
+        echo "Not enough arguments, arguments $1 Tag name value, $2 profile name"
+        return 1
+    fi
 
-  tag=*$1*
-  aws ec2 describe-instances \
-               --output table \
-               --filters "Name=tag-key,Values=Name" "Name=tag-value,Values=$tag" "Name=instance-state-code,Values=16" \
-               --query 'Reservations[].Instances[].[Tags[?Key==`Name`] | [0].Value, InstanceId]' \
-               --profile $2
+    tag=*$1*
+    aws ec2 describe-instances \
+        --output table \
+        --filters "Name=tag-key,Values=Name" "Name=tag-value,Values=$tag" "Name=instance-state-code,Values=16" \
+        --query 'Reservations[].Instances[].[Tags[?Key==`Name`] | [0].Value, InstanceId]' \
+        --profile $2
 }
+
+function history_sync () {
+    builtin history -a
+    builtin history -c
+    builtin history -r
+}
+
 
 case "$-" in
 *i*)
+    if [ -f ~/.dotfiles.version ] ; then
+        cat ~/.dotfiles.version
+    fi
+
     if [ -f ~/.ssh/source-ssh-agent ] ; then
         if [ "${SSH_AUTH_SOCK}" != "" ] ; then
             export SSH_AUTH_SOCK_ORIG="${SSH_AUTH_SOCK}"
