@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# ${1} = "local", e.g. core, x360, rea
+# ${2} = "machine", e.g. cygwin, mac, redhat
+# ${3} = rsync flags, e.g. -n
+
 set -x
 
 rsync ${3} --exclude '*.sw?' -HPvax --no-o --no-g --no-p generic/ ~/
