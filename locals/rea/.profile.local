@@ -1,0 +1,5 @@
+case "$-" in
+*i*)
+    alias sssh='/Users/philip.jay/venvs/sssh/bin/sssh'
+    ;;
+esac
