@@ -42,6 +42,15 @@ function history_sync () {
     builtin history -r
 }
 
+function workon () {
+    if [[ $# -eq 0 ]] ; then
+        ls -b ~/venvs
+    elif [[ $# -eq 1 ]] ; then
+        source ~/venvs/$1/bin/activate
+    else
+        echo "Error: expected only one arguement"
+    fi
+}
 
 case "$-" in
 *i*)
@@ -92,8 +101,8 @@ case "$-" in
         socat - TCP4:$@
     }
 
-    if [ -x /usr/bin/colordiff ] ; then
-        alias diff='/usr/bin/colordiff -u'
+    if [[ -x `which colordiff` ]] ; then
+        alias diff="`which colordiff` -u"
     else
         alias diff='/usr/bin/diff -u'
     fi
