@@ -101,6 +101,10 @@ autocmd BufNewFile,BufRead *.tsv set noexpandtab
 "       gitcommits: goto line 0
 autocmd FileType gitcommit call setpos('.', [0, 1, 1, 0])
 
+"       I like modelines ... sec risk tho ...
+set modeline
+set modelines=2
+
 "	fonts for gvim
 if has("gui_running")
   if has("gui_gtk2")
