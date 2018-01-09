@@ -46,6 +46,9 @@ function workon () {
     if [[ $# -eq 0 ]] ; then
         ls -b ~/venvs
     elif [[ $# -eq 1 ]] ; then
+        if [[ "${VIRTUAL_ENV}" != "" ]] ; then
+            deactivate
+        fi
         source ~/venvs/$1/bin/activate
     else
         echo "Error: expected only one arguement"
