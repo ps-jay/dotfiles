@@ -2,7 +2,9 @@ export HTTP_PROXY=http://proxy.nab.com.au:10091
 export http_proxy=${HTTP_PROXY}
 export HTTPS_PROXY=${HTTP_PROXY}
 export https_proxy=${HTTP_PROXY}
-export NO_PROXY=.local,localhost,127.0.0.1,webmail2.nab.com.au,go,developer.nab.com.au
+export NO_PROXY=.local,localhost,127.0.0.1,webmail2.nab.com.au,go,developer.nab.com.au,idp.nab.com.au
 export no_proxy=${NO_PROXY}
 
 export DENV="-e HTTP_PROXY -e http_proxy -e HTTPS_PROXY -e https_proxy -e NO_PROXY -e no_proxy"
+
+alias nabpipi='pip install --trusted-host pypi.python.org'
