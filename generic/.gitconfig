@@ -16,3 +16,5 @@
 [core]
 	excludesfile = ~/.gitignore
         pager = less -+F -RX
+[fetch]
+        prune = true
