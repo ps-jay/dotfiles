@@ -7,7 +7,8 @@ export no_proxy=${NO_PROXY}
 
 export DENV="-e HTTP_PROXY -e http_proxy -e HTTPS_PROXY -e https_proxy -e NO_PROXY -e no_proxy"
 
-alias nabpipi='pip install --trusted-host pypi.python.org'
+alias nabpipi='pip install --trusted-host pypi.python.org --trusted-host pypi.org --trusted-host files.pythonhosted.org'
+alias wgetncc='wget --no-check-certificate'
 
 function samlf5 () {
     $(workon samlf5 && /usr/bin/env python /usr/local/bin/samlf5.py -u p748686 -v $*)
