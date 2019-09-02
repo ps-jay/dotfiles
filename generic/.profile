@@ -42,18 +42,24 @@ function history_sync () {
     builtin history -r
 }
 
-function workon () {
-    if [[ $# -eq 0 ]] ; then
-        ls -b ~/venvs
-    elif [[ $# -eq 1 ]] ; then
-        if [[ "${VIRTUAL_ENV}" != "" ]] ; then
-            deactivate
+export WORKON_HOME=~/venvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+if [[ -f /usr/local/bin/virtualenvwrapper.sh ]] ; then
+    source /usr/local/bin/virtualenvwrapper.sh > /dev/null
+else
+    function workon () {
+        if [[ $# -eq 0 ]] ; then
+            ls -b ${WORKON_HOME}
+        elif [[ $# -eq 1 ]] ; then
+            if [[ "${VIRTUAL_ENV}" != "" ]] ; then
+                deactivate
+            fi
+            source ${WORKON_HOME}/$1/bin/activate
+        else
+            echo "Error: expected only one arguement"
         fi
-        source ~/venvs/$1/bin/activate
-    else
-        echo "Error: expected only one arguement"
-    fi
-}
+    }
+fi
 
 case "$-" in
 *i*)
