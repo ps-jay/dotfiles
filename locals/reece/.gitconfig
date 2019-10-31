@@ -1,0 +1,20 @@
+[user]
+	name = Phil Jay
+	email = phil.jay@reece.com.au
+[alias]
+	br = branch
+	ci = commit
+	co = checkout
+	di = diff
+	lo = log
+	sh = show
+	st = status
+[color]
+        ui = true
+[push]
+	default = current
+[core]
+	excludesfile = ~/.gitignore
+        pager = less -+F -RX
+[fetch]
+        prune = true
