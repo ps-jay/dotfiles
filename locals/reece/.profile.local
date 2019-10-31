@@ -1,0 +1,3 @@
+function awslogin () {
+    export $( aws-okta exec "${1}" -- env | egrep '^AWS' )
+}

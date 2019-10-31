@@ -22,20 +22,6 @@ function pathmunge () {
     fi
 }
 
-function awslookup () {
-    if [ "$#" -ne 2 ]; then
-        echo "Not enough arguments, arguments $1 Tag name value, $2 profile name"
-        return 1
-    fi
-
-    tag=*$1*
-    aws ec2 describe-instances \
-        --output table \
-        --filters "Name=tag-key,Values=Name" "Name=tag-value,Values=$tag" "Name=instance-state-code,Values=16" \
-        --query 'Reservations[].Instances[].[Tags[?Key==`Name`] | [0].Value, InstanceId]' \
-        --profile $2
-}
-
 function history_sync () {
     builtin history -a
     builtin history -c
