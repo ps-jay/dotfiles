@@ -5,6 +5,7 @@
 	br = branch
 	ci = commit
 	co = checkout
+	cp = cherry-pick
 	di = diff
 	lo = log
 	sh = show
