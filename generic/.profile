@@ -59,7 +59,8 @@ case "$-" in
         fi
         source ~/.ssh/source-ssh-agent
         if [[ "$(uname)" == "Darwin" ]] ; then
-            if [[ `ps -p 1916 | grep -q ssh-agent` -ne 0 ]] ; then
+            ps -ef | grep -qE "ssh-agent .*\.ssh/agent-socket$"
+            if [[ ${?} -ne 0 ]] ; then
                 NO_AGENT=true
             fi
         else
@@ -69,10 +70,11 @@ case "$-" in
         fi
 
         if [[ ! -z "${NO_AGENT}" ]] ; then
-            echo 'SSH-Agent is dead...'
+            echo 'SSH-Agent is dead... launching again'
             export SSH_AUTH_SOCK="${SSH_AUTH_SOCK_ORIG}"
             unset SSH_AUTH_SOCK_ORIG
             unset SSH_AGENT_PID
+            source ~/bin/ssh-agent-launch
         fi
     fi
 
