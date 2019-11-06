@@ -3,7 +3,7 @@
 # Kills and removes any existing agent and
 # launches a new agent, with a socket in ~/.ssh/
 
-ssh-agent -k
+ssh-agent -k 2> /dev/null > /dev/null
 rm ~/.ssh/agent-socket
 ssh-agent -a ~/.ssh/agent-socket > ~/.ssh/source-ssh-agent
 
