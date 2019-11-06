@@ -71,10 +71,13 @@ case "$-" in
 
         if [[ ! -z "${NO_AGENT}" ]] ; then
             echo 'SSH-Agent is dead... launching again'
-            export SSH_AUTH_SOCK="${SSH_AUTH_SOCK_ORIG}"
             unset SSH_AUTH_SOCK_ORIG
             unset SSH_AGENT_PID
+
             source ~/bin/ssh-agent-launch
+            for key in $(cat ~/.ssh/agent-defaults) ; do
+                ssh-add "${key}"
+            done
         fi
     fi
 
