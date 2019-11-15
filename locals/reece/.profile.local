@@ -1,3 +1,16 @@
 function awslogin () {
-    export $( aws-okta exec "${1}" -- env | egrep '^AWS' )
+    if [ -z "${1}" ] ; then
+        echo "ERROR: account name required, e.g. awslogin hackathon"
+    else
+        local env_vars
+        local exit_status
+        env_vars="$(aws-okta env "${1}")"
+        exit_status=$?
+
+        if [ $exit_status -eq 0 ] ; then
+            export $(echo "${env_vars}")
+        else
+            $(exit $exit_status)
+        fi
+    fi
 }
