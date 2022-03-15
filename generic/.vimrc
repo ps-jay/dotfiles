@@ -37,6 +37,10 @@ set nohlsearch
 "	make backspace work like most other apps
 set backspace=2
 
+"       coloured columns
+set colorcolumn=80,120
+highlight ColorColumn ctermbg=255
+
 " Only do this part when compiled with support for autocommands
 if has("autocmd")
   augroup redhat
