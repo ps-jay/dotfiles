@@ -1,16 +1,15 @@
 function awslogin () {
     if [ -z "${1}" ] ; then
-        echo "ERROR: account name required, e.g. awslogin hackathon"
-    else
-        local env_vars
-        local exit_status
-        env_vars="$(aws-okta env "${1}")"
-        exit_status=$?
-
-        if [ $exit_status -eq 0 ] ; then
-            export $(echo "${env_vars}")
-        else
-            $(exit $exit_status)
-        fi
+        echo "ERROR: account name required, e.g. awslogin core-nonprod" >&2
+        return 1
     fi
+    # Export region as defined in profile
+    if AWS_REGION=$(aws configure get region --profile "${1}") ; then
+        AWS_DEFAULT_REGION=${AWS_REGION}
+        export AWS_REGION AWS_DEFAULT_REGION
+    else
+        unset AWS_REGION AWS_DEFAULT_REGION
+    fi
+    # Check credentials are current, refresh if needed and export into shell
+    aws configure list --profile "${1}" && eval $(saml2aws script --profile "${1}")
 }
